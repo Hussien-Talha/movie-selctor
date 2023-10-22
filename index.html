@@ -19,7 +19,7 @@
     <div id="movieDisplay"></div>
 
     <script>
-        var apiKey = 'YOUR_TMDB_API_KEY'; // Replace with your TMDB API key
+        var apiKey = '6341a50b43b44623a7e94e267594d7c4'; // Replace with your TMDB API key
 
         function getRandomMovie() {
             fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=2005&certification_country=US&certification.lte=PG-13')
