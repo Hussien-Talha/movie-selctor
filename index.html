@@ -3,6 +3,13 @@
 <head>
     <title>Random Movie Selector</title>
     <style>
+        .center {
+            display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    width: 100vw; /* Full width of the viewport */
+        }
         body {
             font-family: Arial, sans-serif;
         }
@@ -14,9 +21,12 @@
     </style>
 </head>
 <body>
+    <div class="center">
     <h1>Random Movie Selector</h1>
     <button onclick="displayRandomMovie()">Get Random Movie</button>
-    <div id="movieDisplay"></div>
+    <div id="movieDisplay">
+    </div>
+</div>
 
     <script>
         var apiKey = '6341a50b43b44623a7e94e267594d7c4'; // Replace with your TMDB API key
