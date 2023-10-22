@@ -37,7 +37,8 @@
     fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2005-01-01&primary_release_date.lte=2023-12-31&certification_country=US&certification.lte=PG-13')
         .then(response => response.json())
         .then(data => {
-            var totalPages = data.total_pages;
+            // Limit the totalPages to 500
+            var totalPages = Math.min(data.total_pages, 500);
 
             // Then, select a random page
             var randomPage = Math.floor(Math.random() * totalPages) + 1;
