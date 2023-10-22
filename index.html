@@ -33,15 +33,27 @@
         var apiKey = '6341a50b43b44623a7e94e267594d7c4'; // Replace with your TMDB API key
 
         function getRandomMovie() {
-            fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2005-01-01&certification_country=US&certification.lte=PG-13')
-                .then(response => response.json())
-                .then(data => {
-                    var randomIndex = Math.floor(Math.random() * data.results.length);
-                    var movie = data.results[randomIndex];
-                    document.getElementById('movieDisplay').innerText = movie.title + " (" + movie.release_date.substring(0, 4) + ")";
-                })
-                .catch(error => console.error(error));
-        }
+    // First, get the total number of pages
+    fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2005-01-01&primary_release_date.lte=2023-12-31&certification_country=US&certification.lte=PG-13')
+        .then(response => response.json())
+        .then(data => {
+            var totalPages = data.total_pages;
+
+            // Then, select a random page
+            var randomPage = Math.floor(Math.random() * totalPages) + 1;
+
+            // Then, fetch the movies on that page
+            return fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=' + randomPage + '&primary_release_date.gte=2005-01-01&primary_release_date.lte=2023-12-31&certification_country=US&certification.lte=PG-13');
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Finally, select a random movie from that page
+            var randomIndex = Math.floor(Math.random() * data.results.length);
+            var movie = data.results[randomIndex];
+            document.getElementById('movieDisplay').innerText = movie.title + " (" + movie.release_date.substring(0, 4) + ")";
+        })
+        .catch(error => console.error(error));
+}
 
         function displayRandomMovie() {
             getRandomMovie();
