@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Movie Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #movieDisplay {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Movie Selector</h1>
+    <button onclick="displayRandomMovie()">Get Random Movie</button>
+    <div id="movieDisplay"></div>
+
+    <script>
+        var apiKey = 'YOUR_TMDB_API_KEY'; // Replace with your TMDB API key
+
+        function getRandomMovie() {
+            fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=2005&certification_country=US&certification.lte=PG-13')
+                .then(response => response.json())
+                .then(data => {
+                    var randomIndex = Math.floor(Math.random() * data.results.length);
+                    var movie = data.results[randomIndex];
+                    document.getElementById('movieDisplay').innerText = movie.title + " (" + movie.release_date.substring(0, 4) + ")";
+                })
+                .catch(error => console.error(error));
+        }
+
+        function displayRandomMovie() {
+            getRandomMovie();
+        }
+    </script>
+</body>
+</html>
