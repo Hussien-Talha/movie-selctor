@@ -45,14 +45,19 @@
             // Then, fetch the movies on that page
             return fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=' + randomPage + '&primary_release_date.gte=2005-01-01&primary_release_date.lte=2023-12-31&certification_country=US&certification.lte=PG-13');
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             // Finally, select a random movie from that page
             var randomIndex = Math.floor(Math.random() * data.results.length);
             var movie = data.results[randomIndex];
             document.getElementById('movieDisplay').innerText = movie.title + " (" + movie.release_date.substring(0, 4) + ")";
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error('There has been a problem with your fetch operation: ', error));
 }
 
         function displayRandomMovie() {
